@@ -5,16 +5,19 @@ import json
 
 
 app = Flask(__name__)
-api = Api(app) #Create api, and app will be api
-
-f = open('books.json',)
-data = json.load(f)
+api = Api(app)
 BOOKS = {}
-id = 0
-for book in data['books']:
-    BOOKS[f'book_{id}'] = book
-    id = id +1
-f.close()
+
+
+def books_structure(file_name):
+
+    f = open(file_name,)
+    data = json.load(f)
+    id = 0
+    for book in data['books']:
+        BOOKS[f'book_{id}'] = book
+        id = id +1
+    f.close()
 
 def login_required(event):
     @wraps(event)
@@ -114,4 +117,5 @@ api.add_resource(Book, '/books/<book_id>')
 api.add_resource(BookList, '/books')
 
 if __name__ == '__main__':
+    books_structure('books.json')
     app.run(debug=True)
