@@ -1,0 +1,36 @@
+{
+  "books": [
+    {
+      "title": "Harry Potter",
+      "author": "J. K. Rowling"
+    },
+    {
+      "title": "Lord of the Rings",
+      "author": "J. R. R. Tolkien"
+    },
+    {
+      "title": "In Search of Lost Time'",
+      "author": "Marcel Proust"
+    },
+    {
+      "title": "The Great Gatsby",
+      "author": "F. Scott_Fitzgerald"
+    },
+    {
+      "title": "Moby Dick",
+      "author": "Herman Melville"
+    },
+    {
+      "title": " Game of Thrones",
+      "author": "George R. R. Martin"
+    },
+    {
+      "title": "החתול והעכברה",
+      "author": "שלמה אבס"
+    },
+    {
+      "title": "מעשה בטבעת",
+      "author": "אילן שיינפלד"
+    }
+  ]
+}

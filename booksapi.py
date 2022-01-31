@@ -1,3 +1,4 @@
+import requests
 from flask import Flask, request, make_response
 from flask_restful import Api, Resource, abort, reqparse
 from functools import wraps
@@ -7,6 +8,24 @@ import json
 app = Flask(__name__)
 api = Api(app)
 BOOKS = {}
+
+def isEnglish(s):
+    try:
+        s.encode(encoding='utf-8').decode('ascii')
+    except UnicodeDecodeError:
+        return False
+    else:
+        return True
+
+def get_author_information(author):
+    result =''
+    if not isEnglish(author):
+        parse_author = author.replace(" ", "_")
+        result = f'https://he.wikipedia.org/wiki/{parse_author}'
+    else:
+        parse_author = author.replace(" ", "_")
+        result = f'https://en.wikipedia.org/wiki/{parse_author}'
+    return result
 
 
 def books_structure(file_name):
@@ -19,23 +38,11 @@ def books_structure(file_name):
         id = id +1
     f.close()
 
-def login_required(event):
-    @wraps(event)
-    def login(*args, **kwargs):
-        if request.authorization and \
-                request.authorization.username == 'Admin' and \
-                request.authorization.password == 'A123456':
-            return event(*args, **kwargs)
-
-        return make_response('could not verify your credentials',
-                             401,
-                             {'WWW-Authenticate' : 'Basic realm="Login Realm"'})
-
-    return login
 
 parser = reqparse.RequestParser()
 parser.add_argument('title')
 parser.add_argument('author')
+parser.add_argument('author_information')
 
 
 def abort_book_does_not_exsit(book_id):
@@ -43,7 +50,6 @@ def abort_book_does_not_exsit(book_id):
         abort(404, message ='Book {} does not exist'.format(book_id))
 
 class Book(Resource):
-    @login_required
     def get(self, book_id):
         abort_book_does_not_exsit(book_id)
         return BOOKS[book_id]
@@ -61,25 +67,27 @@ class Book(Resource):
                  index = index + 1
 
         with open('books.json', 'w') as data_file:
-            json.dump(data, data_file, indent= 2)
+            json.dump(data, data_file, indent= 2, ensure_ascii=False)
 
 
         del BOOKS[book_id]
 
-        return '', 204
+        return '', 204  #204 No Content
 
     def put(self,book_id):
         args = parser.parse_args()
-        book_information = {'title': args['title'], 'author':args['author']}
+        author_information = get_author_information(args['author'])
+        book_information = {'title': args['title'], 'author': args['author'],'author_information':author_information}
         with open('books.json') as data_file:
             data = json.load(data_file)
             for book in data['books']:
                  if BOOKS[book_id]['title'] == book['title']:
                     book['title'] = args['title']
                     book['author'] = args['author']
+                    book['author_information']= author_information
                     break
         with open('books.json', 'w') as data_file:
-            json.dump(data, data_file, indent=2)
+            json.dump(data, data_file, indent=2, ensure_ascii=False)
 
         BOOKS[book_id] = book_information
         return  book_information
@@ -91,15 +99,15 @@ class BookList(Resource):
 
     def post(self):
         args = parser.parse_args()
-
+        author_information = get_author_information(args['author'])
         current_book_id = 0
-
+        
         if len(BOOKS) > 0:
             for book in BOOKS:
                 x= int(book.split('_')[-1])
                 if x > current_book_id:
                     current_book_id = x
-        book_information = {'title': args['title'], 'author': args['author']}
+        book_information = {'title': args['title'], 'author': args['author'],'author_information':author_information}
         BOOKS[f'book_{current_book_id +1}'] = book_information
         write_json(book_information,'books.json')
         return BOOKS[f'book_{current_book_id +1}'], 201
@@ -110,7 +118,7 @@ def write_json(new_data, filename='data.json'):
         file_data = json.load(file)
         file_data["books"].append(new_data)
         file.seek(0)
-        json.dump(file_data, file, indent = 2)
+        json.dump(file_data, file, indent = 2, ensure_ascii=False)
 
 
 api.add_resource(Book, '/books/<book_id>')

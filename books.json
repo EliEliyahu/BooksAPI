@@ -1,24 +1,49 @@
 {
-	"books": [
-		{
-		"title": "Harry Potter",
- 		"author":"J. K. Rowling"
-		},
-		{
-		"title": "Lord of the Rings",
- 		"author":"J. R. R. Tolkien"
-		},
-		{
-		"title": "In Search of Lost Time'",
- 		"author":"Marcel Proust"
-		},
-		{
-		"title": "The Great Gatsby",
- 		"author":"F. Scott Fitzgerland"
-		},
-		{
-		"title": "Moby Dick",
- 		"author":"Herman Melville"
-		}
-	]
+  "books": [
+    {
+      "title": "Harry Potter",
+      "author": "J. K. Rowling",
+      "author_information": "https://en.wikipedia.org/wiki/J._K._Rowling"
+    },
+    {
+      "title": "Lord of the Rings",
+      "author": "J. R. R. Tolkien",
+      "author_information": "https://en.wikipedia.org/wiki/J._R._R._Tolkien"
+    },
+    {
+      "title": "In Search of Lost Time'",
+      "author": "Marcel Proust",
+      "author_information": "https://en.wikipedia.org/wiki/Marcel_Proust"
+    },
+    {
+      "title": "The Great Gatsby",
+      "author": "F. Scott_Fitzgerald",
+      "author_information": "https://en.wikipedia.org/wiki/F._Scott_Fitzgerald"
+    },
+    {
+      "title": "Moby Dick",
+      "author": "Herman Melville",
+      "author_information": "https://en.wikipedia.org/wiki/Herman_Melville"
+    },
+    {
+      "title": " Game of Thrones",
+      "author": "George R. R. Martin",
+      "author_information": "https://en.wikipedia.org/wiki/George_R._R._Martin"
+    },
+    {
+      "title": " Game of Thrones",
+      "author": "George R. R. Martin",
+      "author_information": "https://en.wikipedia.org/wiki/George_R._R._Martin"
+    },
+    {
+      "title": "החתול והעכברה",
+      "author": "שלמה אבס",
+      "author_information": "https://he.wikipedia.org/wiki/שלמה_אבס"
+    },
+    {
+      "title": "מעשה בטבעת",
+      "author": "אילן שיינפלד",
+      "author_information": "https://he.wikipedia.org/wiki/אילן_שיינפלד"
+    }
+  ]
 }
