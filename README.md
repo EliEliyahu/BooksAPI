@@ -1,4 +1,4 @@
-Books Library API Project (Python)
+Books Library Restful API Project (Python).
 
 Supporting REST:
 
@@ -7,4 +7,7 @@ GET    Request.<br />
 POST   Request.<br />
 DELETE Request.
 
-while using user Authentication.
+
+Including the following feature: 
+
+Automatically generate a link about the author when adding a new book.
