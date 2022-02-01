@@ -8,5 +8,5 @@ POST   Request.<br />
 DELETE Request.
 
 
-Including the following feature: 
+Including the following feature: <br />
 Automatically generate a link about the author when adding a new book.
