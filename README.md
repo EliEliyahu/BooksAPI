@@ -9,5 +9,4 @@ DELETE Request.
 
 
 Including the following feature: 
-
 Automatically generate a link about the author when adding a new book.
