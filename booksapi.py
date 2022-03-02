@@ -19,18 +19,20 @@ def isEnglish(s):
 
 def get_author_information(author):
     result =''
-    if not isEnglish(author):
-        parse_author = author.replace(" ", "_")
+    print(author)
+    test = str(author)
+    if not isEnglish(test):
+        parse_author = test.replace(" ", "_")
         result = f'https://he.wikipedia.org/wiki/{parse_author}'
     else:
-        parse_author = author.replace(" ", "_")
+        parse_author = test.replace(" ", "_")
         result = f'https://en.wikipedia.org/wiki/{parse_author}'
     return result
 
 
 def books_structure(file_name):
 
-    f = open(file_name,encoding="utf8")
+    f = open(file_name, encoding="utf8")
     data = json.load(f)
     id = 0
     for book in data['books']:
@@ -57,7 +59,7 @@ class Book(Resource):
     def delete(self,book_id):
         abort_book_does_not_exsit(book_id)
 
-        with open('books.json') as data_file:
+        with open('books.json', encoding="utf8") as data_file:
             data = json.load(data_file)
             index = 0
             for book in data['books']:
@@ -66,7 +68,7 @@ class Book(Resource):
                     break
                  index = index + 1
 
-        with open('books.json', 'w') as data_file:
+        with open('books.json', 'w',encoding="utf8") as data_file:
             json.dump(data, data_file, indent= 2, ensure_ascii=False)
 
 
@@ -78,7 +80,7 @@ class Book(Resource):
         args = parser.parse_args()
         author_information = get_author_information(args['author'])
         book_information = {'title': args['title'], 'author': args['author'],'author_information':author_information}
-        with open('books.json') as data_file:
+        with open('books.json',encoding="utf8") as data_file:
             data = json.load(data_file)
             for book in data['books']:
                  if BOOKS[book_id]['title'] == book['title']:
@@ -86,7 +88,7 @@ class Book(Resource):
                     book['author'] = args['author']
                     book['author_information']= author_information
                     break
-        with open('books.json', 'w') as data_file:
+        with open('books.json', 'w',encoding="utf8") as data_file:
             json.dump(data, data_file, indent=2, ensure_ascii=False)
 
         BOOKS[book_id] = book_information
@@ -99,6 +101,7 @@ class BookList(Resource):
 
     def post(self):
         args = parser.parse_args()
+        print (args,args['author'])
         author_information = get_author_information(args['author'])
         current_book_id = 0
         
@@ -114,7 +117,7 @@ class BookList(Resource):
 
 
 def write_json(new_data, filename='data.json'):
-    with open(filename,'r+') as file:
+    with open(filename,'r+', encoding="utf8") as file:
         file_data = json.load(file)
         file_data["books"].append(new_data)
         file.seek(0)
