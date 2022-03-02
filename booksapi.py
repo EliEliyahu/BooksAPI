@@ -30,7 +30,7 @@ def get_author_information(author):
 
 def books_structure(file_name):
 
-    f = open(file_name,)
+    f = open(file_name,encoding="utf8")
     data = json.load(f)
     id = 0
     for book in data['books']:
